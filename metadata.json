@@ -1,0 +1,6 @@
+{
+  "name": "Routine Tracker",
+  "description": "Smart daily routine schedule manager, study & sleep tracker, customizable reminders, sound preferences, and progress dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
