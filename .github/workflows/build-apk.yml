@@ -156,22 +156,22 @@ jobs:
           esac
           TAG_NAME="debug-apk-build-${GITHUB_RUN_NUMBER}-${GITHUB_RUN_ATTEMPT}"
           RELEASE_TITLE="Debug APK Build #${GITHUB_RUN_NUMBER}"
-          NOTES=$(cat <<EOF
-### Debug APK Build Details
-- **Build Type:** Automatically generated debug APK
-- **Built by:** GitHub Actions
-- **Run Number:** ${GITHUB_RUN_NUMBER}
-- **Run Attempt:** ${GITHUB_RUN_ATTEMPT}
-- **Source Commit SHA:** ${GITHUB_SHA}
-- **Testing Notice:** This APK is intended for testing and debugging.
-- **Notice:** This is not a Play Store production release.
-- **Signing:** Signed only with a temporary debug keystore.
-EOF
-          )
+          NOTES_FILE="${RUNNER_TEMP}/release-notes.md"
+          {
+            echo "### Debug APK Build Details"
+            echo "- **Build Type:** Automatically generated debug APK"
+            echo "- **Built by:** GitHub Actions"
+            echo "- **Run Number:** ${GITHUB_RUN_NUMBER}"
+            echo "- **Run Attempt:** ${GITHUB_RUN_ATTEMPT}"
+            echo "- **Source Commit SHA:** ${GITHUB_SHA}"
+            echo "- **Testing Notice:** This APK is intended for testing and debugging."
+            echo "- **Notice:** This is not a Play Store production release."
+            echo "- **Signing:** Signed only with a temporary debug keystore."
+          } > "$NOTES_FILE"
           echo "Publishing release $TAG_NAME with asset $ASSET_PATH..."
           gh release create "$TAG_NAME" "$ASSET_PATH" \
             --title "$RELEASE_TITLE" \
-            --notes "$NOTES" \
+            --notes-file "$NOTES_FILE" \
             --target "$GITHUB_SHA" \
             --latest
 
